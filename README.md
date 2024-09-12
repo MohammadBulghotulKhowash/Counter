@@ -1,4 +1,4 @@
-# Belajar React Dasar
+# Membuat counter
 
 project ini dibuat untuk studi kasus tentang apa yang saya pelajari di react dasar
 
