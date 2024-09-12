@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Counter</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .counter {
+        height: 100vh;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      const container = document.getElementById("root");
+      const root = ReactDOM.createRoot(container);
+
+      function MyApp() {
+        // event meggunakan useState
+        const [count, setCount] = React.useState(0);
+
+        // Tambahkan angka
+        function incrementNum() {
+          setCount(count + 1);
+        }
+
+        // event click u/ kurangkan angka
+        function decrementNum() {
+          setCount(count - 1);
+        }
+
+        // event click u/ reset
+        function reset() {
+          setCount(count * 0);
+        }
+
+        // component untuk button
+        function Button({ aksi, text }) {
+          // perkondisian pada button reset
+          if (count == 0 && text == "Reset") {
+            return (
+              <button onClick={aksi} disabled>
+                {text}
+              </button>
+            );
+          } else {
+            // perkondisian untuk button + dan -
+            if (count <= 0 && text == "-") {
+              // kondisi apabila count = Min
+              return (
+                <button onClick={aksi} disabled>
+                  {text}
+                </button>
+              );
+            } else if (count >= 100 && text == "+") {
+              // kondisi apabila count = Max
+              return (
+                <button onClick={aksi} disabled>
+                  {text}
+                </button>
+              );
+            } else {
+              return <button onClick={aksi}>{text}</button>;
+            }
+          }
+
+          return <button onClick={aksi}>{text}</button>;
+        }
+
+        // component wrapper untuk angka
+        function CountNum() {
+          if (count <= 0) {
+            // kondisi apabila count = Min
+            return <span> 0 </span>;
+          } else if (count >= 100) {
+            // kondisi apabila count = Max
+            return <span> 100 </span>;
+          } else {
+            return <span> {count} </span>;
+          }
+        }
+
+        // title component
+        function Title({ text }) {
+          return <h2>{text}</h2>;
+        }
+
+        return (
+          <div className="counter">
+            <Title text="Welcome To Counter" />
+            <div>
+              <Button aksi={decrementNum} text="-" />
+              <CountNum />
+              <Button aksi={incrementNum} text="+" />
+            </div>
+            <Button aksi={reset} text="Reset" />
+          </div>
+        );
+      }
+
+      root.render(<MyApp />);
+    </script>
+  </body>
+</html>
